@@ -1,0 +1,298 @@
+:root {
+    --dark-bg: #0A0D18;
+    --main-bg: #10121B;
+    --sidebar-bg: #151722;
+    --text-color: #E0E2E7;
+    --heading-color: #F8F9FA;
+    --link-color: #5D8AFF;
+    --link-hover-color: #A0BFFF;
+    --border-color: #2D3142;
+    --accent-blue: #0077FF;
+    --accent-purple: #9B51E0;
+    --primary-gradient: linear-gradient(45deg, var(--accent-blue), var(--accent-purple));
+}
+
+/* Base styles and reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--dark-bg);
+    color: var(--text-color);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+.page-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* --- Sidebar --- */
+.sidebar {
+    width: 300px;
+    background-color: var(--sidebar-bg);
+    padding: 40px 30px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    overflow-y: auto;
+    border-right: 1px solid var(--border-color);
+}
+
+.toc-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.toc-nav .nav-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--heading-color);
+    text-decoration: none;
+    margin-bottom: 30px;
+    display: block;
+}
+
+.toc-nav ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 15px;
+}
+
+.toc-nav ul li a.nav-link {
+    display: block;
+    padding: 12px 18px;
+    text-decoration: none;
+    color: var(--text-color);
+    border-radius: 8px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.toc-nav ul li a.nav-link.active {
+    background-color: var(--border-color);
+    color: var(--link-color);
+}
+
+.toc-nav ul li a.nav-link:hover {
+    background-color: var(--border-color);
+    color: var(--link-color);
+}
+
+.toc-nav .section-link {
+    margin-top: 20px;
+}
+
+.toc-nav .section-link .main-link {
+    font-weight: 700;
+    color: var(--heading-color);
+    cursor: pointer;
+    position: relative;
+    display: block;
+    padding: 12px 18px;
+}
+
+.toc-nav .section-link .main-link::after {
+    content: '+';
+    position: absolute;
+    right: 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+}
+
+.toc-nav .section-link .main-link.active::after {
+    content: '-';
+}
+
+.toc-nav .sub-nav {
+    display: none;
+    margin-left: 20px;
+    margin-top: 8px;
+    border-left: 2px solid var(--link-color);
+}
+
+.toc-nav .sub-nav.show {
+    display: block;
+}
+
+.toc-nav .sub-nav li a.nav-link {
+    padding: 10px 18px;
+}
+
+/* --- Main Content --- */
+.content-wrapper {
+    margin-left: 300px;
+    padding: 80px 60px;
+    width: calc(100% - 300px);
+    background-color: var(--main-bg);
+}
+
+.content-section {
+    padding-bottom: 80px;
+    display: none;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.content-section.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.content-header {
+    margin-bottom: 60px;
+    border-bottom: 2px solid var(--link-color);
+    padding-bottom: 20px;
+}
+
+.content-header h1 {
+    font-size: 3.5em;
+    color: var(--heading-color);
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.content-header p {
+    color: var(--text-color);
+    font-size: 1.2em;
+}
+
+h2, h3, h4 {
+    color: var(--heading-color);
+    font-weight: 700;
+    margin-top: 0;
+}
+
+h2 { font-size: 2.2em; margin-top: 50px; }
+h3 { font-size: 1.8em; margin-top: 30px; }
+h4 { font-size: 1.5em; }
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--link-hover-color);
+}
+
+/* Contenedores de contenido con efecto de brillo */
+.content-box {
+    background-color: var(--sidebar-bg);
+    border-radius: 16px;
+    padding: 40px;
+    border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.content-box::before {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background: var(--primary-gradient);
+    z-index: -1;
+    filter: blur(10px);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.content-box:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+.content-box:hover::before {
+    opacity: 1;
+}
+
+/* New: Plan Cards */
+.plan-card {
+    background-color: var(--sidebar-bg);
+    border-radius: 16px;
+    padding: 40px;
+    border: 1px solid var(--border-color);
+    position: relative;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+}
+
+.plan-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    border-color: var(--link-color);
+}
+
+.plan-card ul {
+    list-style: none;
+    padding-left: 20px;
+}
+
+.plan-card ul li {
+    position: relative;
+    margin-bottom: 5px;
+}
+
+.plan-card ul li::before {
+    content: '';
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--link-color);
+}
+
+.plan-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.plan-icon {
+    width: 40px;
+    height: 40px;
+    color: var(--link-color);
+}
+
+/* Código en línea */
+code {
+    background-color: var(--border-color);
+    color: var(--link-color);
+    padding: 3px 7px;
+    border-radius: 5px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 0.9em;
+}
+
+/* Underline link effect */
+a {
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    transition: text-decoration-color 0.3s ease;
+}
+
+a:hover {
+    text-decoration-color: var(--link-hover-color);
+}
